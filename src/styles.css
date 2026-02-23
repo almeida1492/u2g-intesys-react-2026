@@ -1,5 +1,118 @@
+.app {
+  background-color: white;
+  display: block;
+  padding: 10px;
+  border: 1.5px solid black;
+  border-radius: 15px;
+}
 .header {
-  background-color: #f0f;
-  padding: 20px;
+  background-color: white;
+}
+.navbar-expand-lg {
+  background-color: white;
+  padding: 15px;
+  border: 1.5px solid black;
+  border-radius: 15px;
+}
+
+.sidebar {
+  background-color: white;
+  display: block;
+  justify-content: center;
   text-align: center;
+  width: 120px;
+  height: 290px;
+  border-radius: 25px;
+  padding: 15px;
+  border: 1.5px solid black;
+  margin: 5px;
+}
+
+.sidebar-buttons {
+  display: flex;
+  flex-direction: column;
+  width: 100px;
+  gap: 3px;
+  margin-left: 10px;
+  margin-top: 95px;
+  background-color: white;
+  border: none;
+}
+
+.btn1 {
+  background-color: white;
+  border: 1.5px solid black;
+  padding: 5px;
+  border-radius: 7px;
+  cursor: pointer;
+}
+
+.btn2 {
+  background-color: white;
+  border: 1.5px solid black;
+  padding: 5px;
+  border-radius: 7px;
+  cursor: pointer;
+}
+
+.sidebar-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  margin-top: 50px;
+}
+
+.btn-bloc-body {
+  background-color: white;
+  border: 1.5px solid black;
+  width: 90px;
+  height: 35px;
+  padding: 5.5px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.content {
+  display: flex;
+  flex-direction: row;
+}
+
+.bloc-body {
+  background-color: white;
+  display: block;
+  justify-content: right;
+  width: 850px;
+  height: 300px;
+  border-radius: 25px;
+  padding: 10px;
+  border: 1.5px solid black;
+  margin: 2px;
+  list-style-type: none;
+  margin-top: 10px;
+}
+
+.bloc-body-liste {
+  background-color: white;
+  display: block;
+  justify-content: right;
+  width: 200px;
+  height: 150px;
+  border-radius: 25px;
+  padding: 10px;
+  border: 1.5px solid black;
+  margin: 5px;
+  list-style-type: none;
+  gap: 500px;
+}
+
+.bloc-body-liste-li {
+  margin-top: 50px;
+}
+
+.bloc-body-text {
+  text-align: center;
+}
+.bloc-body-content {
+  display: flex;
+  align-items: center; /* aligne verticalement */
+  gap: 75px;
 }

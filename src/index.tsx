@@ -1,7 +1,21 @@
 import ReactDOM from "react-dom/client";
+import { HeaderComponent } from "./components/HeaderComponent";
+import { Sidebar } from "./components/Sidebar";
+import { BlocBody } from "./components/BlocBody";
 
 function Component(props: { a: string }) {
-  return <div className="header">This is right out of the oven: {props.a}</div>;
+  return (
+    <div className="app">
+      <div className="header">
+        <HeaderComponent />
+      </div>
+
+      <div className="content">
+        <Sidebar />
+        <BlocBody />
+      </div>
+    </div>
+  );
 }
 
 const el = document.getElementById("root");

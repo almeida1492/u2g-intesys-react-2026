@@ -1,15 +1,25 @@
-import ReactDOM from "react-dom/client";
+import ReactDOM from 'react-dom/client'
 
-function Component(props: { a: string }) {
-  return <div className="header">This is right out of the oven: {props.a}</div>;
+import Header from '../src/components/Header'
+import Sidebar from '../src/components/Sidebar'
+
+function Component() {
+  return (
+    <div className='container'>
+      <div className='content'>
+        <Header />
+        <Sidebar />
+      </div>
+    </div>
+  )
 }
 
-const el = document.getElementById("root");
+const el = document.getElementById('root')
 
 if (!el) {
-  throw new Error("Root element not found");
+  throw new Error('Root element not found')
 }
 
-const root = ReactDOM.createRoot(el);
+const root = ReactDOM.createRoot(el)
 
-root.render(<Component a="hey, I'm a prop!" />);
+root.render(<Component />)

@@ -1,19 +1,8 @@
 import ReactDOM from "react-dom/client";
-import Header from "./components/header/header";
-import Siderbar from "./components/siderbar/siderbar";
+import { App } from "./App";
 
-function Component() {
-  return (
-    <div className="app">
-      <Header />
-      <div className="content">
-        <Siderbar />
-        <main className="main">
-          <h1>TEAM BOARD</h1>
-        </main>
-      </div>
-    </div>
-  );
+function Component(props: { a: string }) {
+  return <div className="header">This is right out of the oven: {props.a}</div>;
 }
 
 const el = document.getElementById("root");
@@ -24,4 +13,4 @@ if (!el) {
 
 const root = ReactDOM.createRoot(el);
 
-root.render(<Component a="hey, I'm a prop!" />);
+root.render(<App a="hey, I'm a prop!"></App>);

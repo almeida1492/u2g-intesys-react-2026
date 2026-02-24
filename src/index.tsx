@@ -1,15 +1,5 @@
 import ReactDOM from "react-dom/client";
-import { Header } from "./components/header/Header";
-import { Sidebar } from "./components/Sidebar";
-
-function App(props: { a: string }) {
-  return (
-    <>
-      <Header />
-      <Sidebar />
-    </>
-  );
-}
+import { App } from "./App";
 
 const el = document.getElementById("root");
 
@@ -19,4 +9,4 @@ if (!el) {
 
 const root = ReactDOM.createRoot(el);
 
-root.render(<App a="hey, I'm a prop!" />);
+root.render(<App a="hey, I'm a prop!"></App>);

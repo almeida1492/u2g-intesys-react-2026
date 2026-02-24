@@ -1,17 +1,7 @@
 import ReactDOM from 'react-dom/client'
 
-import Header from '../src/components/Header'
-import Sidebar from '../src/components/Sidebar'
-
-function Component() {
-  return (
-    <div className='container'>
-      <div className='content'>
-        <Header />
-        <Sidebar />
-      </div>
-    </div>
-  )
+function Component(props: { a: string }) {
+  return <div className='header'>This is right out of the oven: {props.a}</div>
 }
 
 const el = document.getElementById('root')
@@ -22,4 +12,4 @@ if (!el) {
 
 const root = ReactDOM.createRoot(el)
 
-root.render(<Component />)
+root.render(<Component a="hey, I'm a prop!" />)

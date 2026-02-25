@@ -9,4 +9,4 @@ if (!el) {
 
 const root = ReactDOM.createRoot(el);
 
-root.render(<App a="hey, I'm a prop!"></App>);
+root.render(<App></App>);

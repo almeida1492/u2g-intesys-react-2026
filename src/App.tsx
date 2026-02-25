@@ -1,40 +1,38 @@
-import { useState } from 'react'
-import { Header } from './components/header/Header'
-import { Sidebar } from './components/sidebar/Sidebar'
-import { Login } from './pages/Login'
-import { ProjectForm } from './components/projectForm/ProjectForm'
-import { ProjectList } from './components/projectForm/ProjectList'
+import { useState } from "react";
+import { Header } from "./components/header/Header";
+import { Sidebar } from "./components/sidebar/Sidebar";
+import { Login } from "./pages/Login";
+import { ProjectForm } from "./components/projectForm/ProjectForm";
 
 export function App(props: { a: string }) {
-  const [isLogged, setIsLogged] = useState(false)
-  const [projects, setProjects] = useState<
-    { id: number; title: string; description?: string }[]
-  >([])
+  const [isLogged, setIsLogged] = useState(false);
+  const [projects, setProjects] = useState<{ title: string }[]>([]);
 
   const changeLogState = () => {
-    setIsLogged(true)
-  }
-
-  const addProject = (values: {
-    title: string
-    description?: string
-    members?: string
-    columns?: any[]
-  }) => {
-    setProjects([...projects, { ...values, id: Date.now() }])
-  }
-
-  const deleteProject = (id: number) => {
-    setProjects(projects.filter((p) => p.id !== id))
-  }
+    setIsLogged(true);
+  };
 
   return (
-    <>
+    <div className={styles.app}>
       <Header />
       <Sidebar />
 
-      <ProjectList projects={projects} onDelete={deleteProject} />
-      <ProjectForm handleSubmit={addProject} />
+      {projects.map((project, index) => (
+        <div key={index}>{project.title}</div>
+      ))}
+
+      <ProjectForm
+        handleSubmit={(values) => {
+          setProjects([...projects, { ...values }]);
+        }}
+        // handleDelete={() => {}}
+      />
+
+      {/* {isLogged ? (
+        <p>Dashboard</p>
+      ) : (
+        <Login setIsLogged={changeLogState}></Login>
+      )} */}
     </>
-  )
+  );
 }

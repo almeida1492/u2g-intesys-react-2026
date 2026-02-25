@@ -6,7 +6,7 @@ import { ProjectForm } from "./components/projectForm/ProjectForm";
 
 export function App(props: { a: string }) {
   const [isLogged, setIsLogged] = useState(false);
-  const [projects, setProjects] = useState<{ title: string }[]>([]);
+  const [projects, setProjects] = useState<{ title: string; description?: string }[]>([]);
 
   const changeLogState = () => {
     setIsLogged(true);
@@ -18,21 +18,16 @@ export function App(props: { a: string }) {
       <Sidebar />
 
       {projects.map((project, index) => (
-        <div key={index}>{project.title}</div>
+        <div key={index}>
+          <strong>{project.title}</strong>
+        </div>
       ))}
 
       <ProjectForm
-        handleSubmit={(values) => {
-          setProjects([...projects, { ...values }]);
+        onSubmit={(values) => {
+          setProjects([{ ...values }, ...projects]);
         }}
-        // handleDelete={() => {}}
       />
-
-      {/* {isLogged ? (
-        <p>Dashboard</p>
-      ) : (
-        <Login setIsLogged={changeLogState}></Login>
-      )} */}
     </>
   );
 }

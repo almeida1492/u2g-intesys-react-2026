@@ -6,16 +6,45 @@ export const Login = ({ goToProjects }: { goToProjects: () => void }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
+  // const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+  //   fetch("https://jsonplaceholder.typicode.com/users")
+  //     .then((res) => {
+  //       return res.json();
+  //     })
+  //     .then((data) => {
+  //       // We're pretending that we've got a token from the server and that the login was successful;
+  //       goToProjects();
+  //     });
+  // };
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    fetch("https://jsonplaceholder.typicode.com/users")
-      .then((res) => {
-        return res.json();
-      })
-      .then((data) => {
-        // We're pretending that we've got a token from the server and that the login was successful;
-        goToProjects();
+    setLoading(true);
+
+    try {
+      const res = await fetch("http://localhost:8080/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username,
+          password,
+        }),
       });
+
+      if (res.status === 200) {
+        goToProjects(); // 👉 App monte Dashboard
+      } else {
+        alert("Login échoué");
+      }
+    } catch (err) {
+      alert("Erreur serveur");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -48,8 +77,10 @@ export const Login = ({ goToProjects }: { goToProjects: () => void }) => {
               required
             />
           </div>
-
-          <button type="submit">Login</button>
+          <button type="submit" disabled={loading}>
+            {loading ? "Connexion..." : "Login"}
+          </button>
+          {/* <button type="submit">Login</button> */}
         </form>
       </div>
     </main>

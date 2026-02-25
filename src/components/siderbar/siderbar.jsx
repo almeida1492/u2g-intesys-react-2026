@@ -18,5 +18,10 @@ function Siderbar() {
     </div>
   );
 }
-
+{projects.map((project) => (
+  <div key={project.id}>
+    <h3>{project.title}</h3>
+    <button onClick={() => deleteProject(project.id)}>Delete</button>
+  </div>
+))}
 export default Siderbar;

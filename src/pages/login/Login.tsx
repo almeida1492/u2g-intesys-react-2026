@@ -8,14 +8,32 @@ export const Login = ({ goToProjects }: { goToProjects: () => void }) => {
 
   const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
-    fetch("https://jsonplaceholder.typicode.com/users")
-      .then((res) => {
-        return res.json();
-      })
-      .then((data) => {
-        // We're pretending that we've got a token from the server and that the login was successful;
-        goToProjects();
+
+    try {
+      const res = await fetch("http://localhost:8080/user/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username, password }),
+        credentials: "include",
       });
+
+      if (!res.ok) {
+        alert("Nom d’utilisateur ou mot de passe incorrect");
+        return;
+      }
+
+      const data = await res.json();
+      console.log(data);
+      localStorage.setItem("token", data.token);
+      goToProjects();
+
+      goToProjects();
+    } catch (err) {
+      console.error(err);
+      alert("Erreur serveur");
+    }
   };
 
   return (

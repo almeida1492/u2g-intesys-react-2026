@@ -1,14 +1,17 @@
 import { useEffect, useState } from 'react'
 import styles from './login.module.css'
 import globalStyles from '../../globals.module.css'
+import { useNavigate } from 'react-router'
 
-export const Login = ({ goToProjects }: { goToProjects: () => void }) => {
+export const Login = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const navigate = useNavigate()
+
+  const baseUrl = 'http://localhost:8080/user/login'
 
   const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault()
-
     fetch(baseUrl, {
       method: 'POST',
       headers: {
@@ -20,12 +23,13 @@ export const Login = ({ goToProjects }: { goToProjects: () => void }) => {
       }),
     })
       .then((res) => {
+        console.log({ ressource: res })
+        localStorage.setItem('token', 'fake Token')
         return res.json()
       })
       .then((data) => {
-        console.log(data)
         // We're pretending that we've got a token from the server and that the login was successful;
-        goToProjects()
+        navigate('/')
       })
   }
 

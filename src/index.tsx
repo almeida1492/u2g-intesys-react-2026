@@ -13,4 +13,4 @@ if (!el) {
 
 const root = ReactDOM.createRoot(el);
 
-root.render(<App></App>);
+root.render(<App />);

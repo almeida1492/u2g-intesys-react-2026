@@ -8,6 +8,7 @@ import { Login } from "./pages/login/Login";
 import { ProjectForm } from "./components/projectForm/ProjectForm";
 import { Register } from "./pages/register/Register";
 import { Settings } from "./pages/settings/Settings";
+import NotFound from "./pages/notFound/NotFound";
 
 export const AppRoutes = () => {
   return (
@@ -45,6 +46,8 @@ export const AppRoutes = () => {
         />
         <Route path="settings" element={<Settings />} />
       </Route>
+      <Route path="404" element={<NotFound />} />
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 };

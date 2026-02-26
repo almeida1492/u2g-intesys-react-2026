@@ -29,9 +29,8 @@ export const Login = () => {
       const data = await res.json();
       console.log(data);
       localStorage.setItem("token", data.token);
-      goToProjects();
 
-      goToProjects();
+      navigate("/");
     } catch (err) {
       console.error(err);
       alert("Erreur serveur");

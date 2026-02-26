@@ -9,17 +9,18 @@ type Project = {
 };
 
 type SidebarProps = {
-  projects: Project[];
-  deleteProject: (id: number) => void;
+  projects?: Project[];
+  deleteProject?: (id: number) => void;
 };
 
 export function Sidebar({ projects, deleteProject }: SidebarProps) {
+  console.log("Sidebar rendered with projects:", projects);
   return (
     <ul>
-      {projects.map((project) => (
+      {projects?.map((project) => (
         <li key={project.id}>
           {project.title}
-          <button onClick={() => deleteProject(project.id)}>Delete</button>
+          {deleteProject && <button onClick={() => deleteProject(project.id)}>Delete</button>}
         </li>
       ))}
     </ul>

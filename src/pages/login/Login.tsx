@@ -1,10 +1,12 @@
-import { useEffect, useState } from "react";
-import styles from "./login.module.css";
+import { useState } from "react";
+import { useNavigate } from "react-router";
 import globalStyles from "../../globals.module.css";
+import styles from "./login.module.css";
 
-export const Login = ({ goToProjects }: { goToProjects: () => void }) => {
+export const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -14,7 +16,7 @@ export const Login = ({ goToProjects }: { goToProjects: () => void }) => {
       })
       .then((data) => {
         // We're pretending that we've got a token from the server and that the login was successful;
-        goToProjects();
+        navigate("/");
       });
   };
 

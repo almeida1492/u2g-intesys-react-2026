@@ -1,0 +1,16 @@
+.notfound {
+  text-align: center;
+  margin-top: 50px;
+}
+.notfound h1 {
+  font-size: 2em;
+  color: #ff0000;
+}
+.notfound p {
+  font-size: 1.2em;
+  color: #333;
+}
+.notfound a {
+  color: #007bff;
+  text-decoration: none;
+}

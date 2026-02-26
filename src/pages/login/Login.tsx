@@ -12,6 +12,7 @@ export const Login = () => {
     e.preventDefault();
     fetch("https://jsonplaceholder.typicode.com/users")
       .then((res) => {
+        localStorage.setItem("token", "fakeToken");
         return res.json();
       })
       .then((data) => {

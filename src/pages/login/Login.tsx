@@ -6,8 +6,6 @@ export const Login = ({ goToProjects }: { goToProjects: () => void }) => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
 
-  const baseUrl = 'http://localhost:8080/user/login'
-
   const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault()
 
@@ -28,9 +26,6 @@ export const Login = ({ goToProjects }: { goToProjects: () => void }) => {
         console.log(data)
         // We're pretending that we've got a token from the server and that the login was successful;
         goToProjects()
-      })
-      .catch((err) => {
-        console.error({ error: err })
       })
   }
 

@@ -1,0 +1,65 @@
+.projectNotFoundContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f8f9fa;
+}
+
+.projectNotFoundContent {
+  text-align: center;
+  padding: 2rem;
+  max-width: 500px;
+}
+
+.errorIcon {
+  font-size: 4rem;
+  margin: 0;
+}
+
+.errorMessage {
+  font-size: 1.5rem;
+  color: #dc3545;
+  margin: 1rem 0;
+}
+
+.errorDescription {
+  font-size: 1rem;
+  color: #666;
+  margin: 1rem 0 2rem 0;
+  line-height: 1.5;
+}
+
+.buttonContainer {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.primaryButton, .secondaryButton {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.primaryButton {
+  background-color: #28a745;
+  color: white;
+}
+
+.primaryButton:hover {
+  background-color: #218838;
+}
+
+.secondaryButton {
+  background-color: #007bff;
+  color: white;
+}
+
+.secondaryButton:hover {
+  background-color: #0056b3;
+}

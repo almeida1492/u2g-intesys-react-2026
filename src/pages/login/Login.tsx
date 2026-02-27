@@ -1,47 +1,25 @@
-import { useEffect, useState } from "react";
-import styles from "./login.module.css";
+import { useState } from "react";
+import { useNavigate } from "react-router";
 import globalStyles from "../../globals.module.css";
+import styles from "./login.module.css";
 
-export const Login = ({ goToProjects }: { goToProjects: () => void }) => {
+export const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
- 
+  const navigate = useNavigate();
 
-
- /* const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
     fetch("https://jsonplaceholder.typicode.com/users")
       .then((res) => {
+        localStorage.setItem("token", "fakeToken");
         return res.json();
       })
       .then((data) => {
         // We're pretending that we've got a token from the server and that the login was successful;
-        goToProjects();
-      });
-  }; */
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => { 
-    e.preventDefault();
-    setIsLoading(true);
-   
-
-    fetch("http://localhost:5432/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, password }),
-    })
-      .then((response) => {
-        if (response.status === 200) {
-          goToProjects();
-        } 
-      })
-      
-      .finally(() => {
-        setIsLoading(false);
+        navigate("/");
       });
   };
- 
 
   return (
     <main className={`${globalStyles.main} ${styles.loginContainer}`}>

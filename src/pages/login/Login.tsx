@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import globalStyles from "../../globals.module.css";
+import { userApi } from "../../services";
 import styles from "./login.module.css";
 
 export const Login = () => {
@@ -10,30 +11,17 @@ export const Login = () => {
 
   const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     try {
-      const res = await fetch("http://localhost:8080/user/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ username, password }),
-        credentials: "include",
+      const response = await userApi.login({
+        loginRequest: { username, password },
       });
-
-      if (!res.ok) {
-        alert("Nom d’utilisateur ou mot de passe incorrect");
-        return;
+      if (!response.token) {
+        throw new Error("No token received");
       }
-
-      const data = await res.json();
-      console.log(data);
-      localStorage.setItem("token", data.token);
-
+      localStorage.setItem("token", response.token);
       navigate("/");
-    } catch (err) {
-      console.error(err);
-      alert("Erreur serveur");
+    } catch (error) {
+      console.error("Login failed", error);
     }
   };
 

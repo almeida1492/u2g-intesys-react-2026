@@ -1,0 +1,24 @@
+.kanbanBoard {
+  padding: 20px;
+}
+
+.boardsContainer {
+  display: flex;
+  gap: 20px;
+  width: 100%;
+}
+
+.column {
+  background-color: gray;
+  padding: 10px;
+  border-radius: 5px;
+  width: 300px;
+  flex: 1;
+}
+
+.card {
+  background-color: #f0f0f0;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}

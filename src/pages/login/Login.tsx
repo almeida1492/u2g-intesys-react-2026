@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import globalStyles from "../../globals.module.css";
+import { userApi } from "../../services";
 import styles from "./login.module.css";
 
 export const Login = () => {
@@ -10,15 +11,18 @@ export const Login = () => {
 
   const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
-    fetch("https://jsonplaceholder.typicode.com/users")
-      .then((res) => {
-        localStorage.setItem("token", "fakeToken");
-        return res.json();
-      })
-      .then((data) => {
-        // We're pretending that we've got a token from the server and that the login was successful;
-        navigate("/");
+    try {
+      const response = await userApi.login({
+        loginRequest: { username, password },
       });
+      if (!response.token) {
+        throw new Error("No token received");
+      }
+      localStorage.setItem("token", response.token);
+      navigate("/");
+    } catch (error) {
+      console.error("Login failed", error);
+    }
   };
 
   return (

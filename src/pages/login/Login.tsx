@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import styles from "./login.module.css";
 import globalStyles from "../../globals.module.css";
+import { Link, useNavigate, useParams } from "react-router";
 
 export const Login = ({ goToProjects }: { goToProjects: () => void }) => {
   const [username, setUsername] = useState("");
@@ -34,6 +35,16 @@ export const Login = ({ goToProjects }: { goToProjects: () => void }) => {
           password,
         }),
       });
+      //       fetch("https://jsonplaceholder.typicode.com/users")
+      //       .then((res) => {
+      //         localStorage.setItem("token", "fakeToken");
+      //         return res.json();
+      //       })
+      //       .then((data) => {
+      //         // We're pretending that we've got a token from the server and that the login was successful;
+      //         navigate("/");
+      // >>>>>>> origin
+      //       });
 
       if (res.status === 200) {
         goToProjects(); // 👉 App monte Dashboard

@@ -1,10 +1,15 @@
-/* ProjectForm.css */
 
 .pf-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 40px;
+  z-index: 1000;
 }
 
 .pf-modal {
@@ -55,74 +60,27 @@
   font-family: Georgia, serif;
 }
 
-.pf-columns-row {
-  display: flex;
-  gap: 10px;
-  align-items: flex-start;
-  flex-wrap: wrap;
-  margin-top: 8px;
-}
-
-.pf-column-card {
-  border: 1px solid #eedada;
-  border-radius: 10px;
-  padding: 10px 12px;
-  width: 140px;
-  background: #fafafa;
-  position: relative;
-}
-
-.pf-column-label {
-  font-family: Georgia, serif;
-  font-size: 13px;
-  color: #888;
-  display: block;
-  margin-bottom: 6px;
-}
-
-.pf-column-input {
-  border: none;
-  border-bottom: 1px solid #bbb;
-  outline: none;
-  width: 100%;
-  font-family: Georgia, serif;
-  font-size: 13px;
-  background: transparent;
-  color: #333;
-  padding-bottom: 2px;
-}
-
-.pf-remove-btn {
-  position: absolute;
-  top: 6px;
-  right: 8px;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  font-size: 12px;
-  color: #f88e8e;
-  padding: 0;
-}
-
-.pf-add-col-btn {
-  border: 1px solid #c8c8c8;
-  border-radius: 8px;
-  background: #fafafa;
-  width: 32px;
-  height: 32px;
-  font-size: 18px;
-  cursor: pointer;
-  color: #888;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  align-self: center;
-}
-
 .pf-actions {
   display: flex;
   justify-content: flex-end;
+  gap: 10px;
   margin-top: 24px;
+}
+
+.pf-cancel-btn {
+  background: transparent;
+  color: #888;
+  border: 1px solid #c8c8c8;
+  border-radius: 8px;
+  padding: 8px 24px;
+  cursor: pointer;
+  font-family: Georgia, serif;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+}
+
+.pf-cancel-btn:hover {
+  background: #f0f0f0;
 }
 
 .pf-create-btn {
@@ -135,4 +93,8 @@
   font-family: Georgia, serif;
   font-size: 14px;
   letter-spacing: 0.5px;
+}
+
+.pf-create-btn:hover {
+  background: #f0f0f0;
 }

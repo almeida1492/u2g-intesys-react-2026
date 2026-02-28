@@ -9,7 +9,7 @@ export const Login = () => {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
+ const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       const response = await userApi.login({

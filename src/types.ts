@@ -1,3 +1,14 @@
+export type ApiResponse<T> = {
+  data: T;
+  token?: string;
+  message?: string;
+};
+
+export type ApiError = {
+  message: string;
+  status?: number;
+};
+
 export type Project = {
   id: string;
   name: string;

@@ -9,6 +9,7 @@ import { ProjectForm } from "./components/projectForm/ProjectForm";
 import { Register } from "./pages/register/Register";
 import { Settings } from "./pages/settings/Settings";
 import { NotFound } from "./pages/notFound/NotFound";
+import { apiService } from "./services/api";
 
 export const AppRoutes = () => {
   return (
@@ -38,11 +39,19 @@ export const AppRoutes = () => {
         <Route path="projects/:id" element={<KanbanBoard />} />
         <Route
           path="projects/create"
-          element={<ProjectForm onSubmit={() => {}} />}
+          element={
+            <ProjectForm
+              onSubmit={(values) => apiService.createProject(values)}
+            />
+          }
         />
         <Route
           path="projects/update/:id"
-          element={<ProjectForm onSubmit={() => {}} />}
+          element={
+            <ProjectForm
+              onSubmit={(values) => apiService.createProject(values)}
+            />
+          }
         />
         <Route path="settings" element={<Settings />} />
       </Route>

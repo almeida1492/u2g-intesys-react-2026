@@ -1,27 +1,34 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import globalStyles from "../../globals.module.css";
-import { userApi } from "../../services";
+import { apiService } from "../../services/api";
 import styles from "./login.module.css";
 
 export const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
-  const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsLoading(true);
+    setError(null);
+
     try {
-      const response = await userApi.login({
-        loginRequest: { username, password },
-      });
+      const response = await apiService.login(username, password);
+
       if (!response.token) {
         throw new Error("No token received");
       }
+
       localStorage.setItem("token", response.token);
       navigate("/");
     } catch (error) {
-      console.error("Login failed", error);
+      setError(error instanceof Error ? error.message : "Login failed");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -40,7 +47,7 @@ export const Login = () => {
               id="username"
               type="text"
               required
-            ></input>
+            />
           </div>
           <div className={styles.textField}>
             <label className={styles.label} htmlFor="password">
@@ -49,14 +56,18 @@ export const Login = () => {
             <input
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              type="text"
+              type="password"
               name="password"
               id="password"
               required
             />
           </div>
 
-          <button type="submit">Login</button>
+          {error && <p className={styles.error}>{error}</p>}
+
+          <button type="submit" disabled={isLoading}>
+            {isLoading ? "Loading..." : "Login"}
+          </button>
         </form>
       </div>
     </main>

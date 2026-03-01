@@ -7,7 +7,7 @@ export const ProjectNotFound = () => {
   return (
     <main className={styles.projectNotFoundContainer}>
       <div className={styles.projectNotFoundContent}>
-        <h1 className={styles.errorIcon}>📁</h1>
+        <h1 className={styles.errorIcon}>📁j</h1>
         <h2 className={styles.errorMessage}>Projet non trouvé</h2>
         <p className={styles.errorDescription}>
           Le projet que vous recherchez n'existe pas ou a été supprimé.

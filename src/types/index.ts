@@ -1,3 +1,4 @@
+export * from '../types';
 // User types
 export interface User {
   id: string;

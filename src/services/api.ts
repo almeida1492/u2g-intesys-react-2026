@@ -1,5 +1,5 @@
 import { API_ENDPOINTS } from '../constants';
-import { ApiResponse, ApiError } from '../types';
+import type { ApiResponse, ApiError } from '../types';
 
 class ApiService {
   private baseURL: string;

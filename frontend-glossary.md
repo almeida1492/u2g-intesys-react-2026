@@ -216,6 +216,135 @@ React is written in JavaScript and runs on top of it.
 
 ---
 
+## ⏳ Asynchronous Functions & Promises
+
+JavaScript is **single-threaded**, but it can handle asynchronous operations such as:
+
+- Fetching data from an API
+
+- Reading files
+
+- Waiting for timers
+
+An **asynchronous function** allows code to run without blocking the rest of the program.
+
+### Promises
+
+A **Promise** represents a value that will be available in the future.
+
+A Promise can be:
+
+- Pending – still running
+
+- Fulfilled – completed successfully
+
+- Rejected – completed with an error
+
+Example:
+
+```javascript
+fetch("/api/projects")
+  .then((response) => response.json())
+  .then((data) => console.log(data))
+  .catch((error) => console.error(error));
+```
+
+### async / await
+
+`async` and `await` provide a cleaner syntax for working with Promises.
+
+```javascript
+async function loadProjects() {
+  try {
+    const response = await fetch("/api/projects");
+    const data = await response.json();
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+```
+
+`await` pauses execution inside the async function until the Promise resolves.
+
+---
+
+## 📝 Controlled vs Uncontrolled Forms (React)
+
+Forms allow users to input data. In React, there are two main ways to handle form inputs.
+
+### Controlled Components
+
+A **controlled component** is a form input whose value is controlled by React state.
+
+React becomes the "single source of truth".
+
+Example:
+
+```javascript
+const [value, setValue] = useState("");
+
+<input value={value} onChange={(e) => setValue(e.target.value)} />;
+```
+
+Characteristics:
+
+- The input value is stored in state
+
+- Every change triggers a re-render
+
+- Easier validation and dynamic behavior
+
+- More predictable data flow
+
+### Uncontrolled Components
+
+An **uncontrolled component** stores its value inside the DOM instead of React state.
+
+You typically use a `ref` to access the value.
+
+Example:
+
+```javascript
+const inputRef = useRef < HTMLInputElement > null;
+
+<input ref={inputRef} />;
+```
+
+To read the value:
+
+```javascript
+const value = inputRef.current?.value;
+```
+
+Characteristics:
+
+- The DOM handles the state
+
+- Fewer re-renders
+
+- Simpler for basic forms
+
+- Less direct control over input behavior
+
+### When to Use Each?
+
+- Use **controlled components** when:
+  - You need validation
+
+  - You need dynamic UI updates
+
+  - You need tight control over input behavior
+
+- Use **uncontrolled components** when:
+  - The form is simple
+
+  - Performance is critical
+
+  - You want minimal state management
+
+---
+
 # 🧠 Mental Model Summary
 
 - **HTML** → Structure\

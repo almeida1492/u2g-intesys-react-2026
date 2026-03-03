@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { projectApi } from "../../services";
 import { ProjectForm } from "../../components/projectForm/ProjectForm";
 
+
 export function ProjectsPage() {
   const [projects, setProjects] = useState<any[]>([]);
   const [showForm, setShowForm] = useState(false);
@@ -20,20 +21,20 @@ export function ProjectsPage() {
   }, []);
 
   const handleCreateProject = async (values: any) => {
-    console.log("🚀 handleCreateProject called with:", values);
+    console.log(" handleCreateProject called with:", values);
     try {
-      console.log("📡 Calling API...");
+      console.log(" Calling API...");
       const response = await projectApi.createProject({
         projectRequest: {
           title: values.title,
           description: values.description,
         },
       });
-      console.log("✅ Project created:", response);
+      console.log(" Project created:", response);
       setShowForm(false);
       loadProjects();
     } catch (error) {
-      console.error("❌ Error creating project", error);
+      console.error("Error creating project", error);
     }
   };
 

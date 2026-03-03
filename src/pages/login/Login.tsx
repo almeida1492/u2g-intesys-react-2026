@@ -2,7 +2,7 @@ import { useFormik } from "formik";
 import { useNavigate } from "react-router";
 import * as Yup from "yup";
 import globalStyles from "../../globals.module.css";
-import { userApi } from "../../services";
+import { authApi } from "../../services";
 import styles from "./login.module.css";
 
 export const Login = () => {
@@ -13,18 +13,16 @@ export const Login = () => {
       username: "",
       password: "",
     },
-
     validationSchema: Yup.object({
       username: Yup.string().required("Required field"),
       password: Yup.string()
         .min(5, "Password must be at least 5 characters")
-        .required("Required filed"),
+        .required("Required field"),
     }),
-
     onSubmit: async (values) => {
       try {
         console.log("values: ", values);
-        const response = await userApi.login({
+        const response = await authApi.login({
           loginRequest: values,
         });
         if (!response.token) {
@@ -66,7 +64,7 @@ export const Login = () => {
             <input
               value={formik.values.password}
               onChange={formik.handleChange}
-              type="text"
+              type="password"
               name="password"
               id="password"
               required

@@ -1,0 +1,25 @@
+.loginContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.loginForm {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background-color: azure;
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.label {
+  font-size: 12px;
+}
+
+.textField {
+  display: flex;
+  flex-direction: column;
+}

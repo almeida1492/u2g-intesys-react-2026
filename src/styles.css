@@ -1,5 +1,7 @@
-.header {
-  background-color: #f0f;
-  padding: 20px;
-  text-align: center;
+body {
+  font-family:
+    "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
 }

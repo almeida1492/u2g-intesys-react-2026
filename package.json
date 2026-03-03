@@ -5,6 +5,7 @@
   "main": "src/index.tsx",
   "type": "module",
   "scripts": {
+    "generate-api": "openapi-generator-cli generate -i openapi.yaml -g typescript-fetch -o src/api",
     "dev": "vite",
     "build": "vite build",
     "test": "test"
@@ -20,12 +21,17 @@
   },
   "homepage": "https://github.com/almeida1492/u2g-intesys-react-2026#readme",
   "dependencies": {
+    "@dnd-kit/react": "^0.3.2",
+    "@openapitools/openapi-generator-cli": "^2.29.0",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^4.7.0",
+    "formik": "^2.4.9",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
+    "react-router": "^7.13.1",
     "typescript": "^5.9.3",
-    "vite": "^6.4.1"
+    "vite": "^6.4.1",
+    "yup": "^1.7.1"
   }
 }

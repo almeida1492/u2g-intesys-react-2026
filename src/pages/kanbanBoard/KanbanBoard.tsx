@@ -4,95 +4,13 @@ import {
   useDroppable,
   type DragEndEvent,
 } from "@dnd-kit/react";
-// import type { Card, Column } from "../../api";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useParams, useNavigate } from "react-router";
+import { columnApi, cardApi } from "../../services";
 import styles from "./kanbanboard.module.css";
-import { useState } from "react";
-
-const initialColumns: any = [
-  {
-    id: 1,
-    title: "TO DO",
-    position: 0,
-    cards: [
-      {
-        id: 2,
-        title: "Do the laundry",
-        description: "Wash, dry, and fold clothes",
-        assignedTo: {
-          name: "Alice",
-        },
-        columnId: 1,
-      },
-      {
-        id: 3,
-        title: "Review pull requests",
-        description: "Check and approve pending PRs",
-        assignedTo: {
-          name: "Bob",
-        },
-        columnId: 1,
-      },
-      {
-        id: 4,
-        title: "Update documentation",
-        description: "Add API endpoint descriptions",
-        assignedTo: {
-          name: "Alice",
-        },
-        columnId: 1,
-      },
-      {
-        id: 5,
-        title: "Fix bug #42",
-        description: "Resolve login timeout issue",
-        assignedTo: {
-          name: "Charlie",
-        },
-        columnId: 1,
-      },
-    ],
-    projectId: 1,
-  },
-  {
-    id: 6,
-    title: "IN PROGRESS",
-    position: 1,
-    cards: [
-      {
-        id: 7,
-        title: "Implement login feature",
-        description: "Add user authentication",
-        assignedTo: {
-          name: "Bob",
-        },
-        columnId: 6,
-      },
-    ],
-    projectId: 1,
-  },
-  {
-    id: 8,
-    title: "DONE",
-    position: 2,
-    cards: [
-      {
-        id: 9,
-        title: "Setup project repository",
-        description: "Initialize git repo and CI/CD",
-        assignedTo: {
-          name: "Charlie",
-        },
-        columnId: 8,
-      },
-    ],
-    projectId: 1,
-  },
-];
 
 function Card({ card }: { card: any }) {
-  const { ref } = useDraggable({
-    id: card.id || 0,
-  });
+  const { ref } = useDraggable({ id: card.id || 0 });
   return (
     <div key={card.id} className={styles.card} ref={ref}>
       <h3>{card.title}</h3>
@@ -103,13 +21,11 @@ function Card({ card }: { card: any }) {
 }
 
 function Column({ column }: { column: any }) {
-  const { ref } = useDroppable({
-    id: column.id || 0,
-  });
+  const { ref } = useDroppable({ id: column.id || 0 });
   return (
     <div key={column.id} className={styles.column} ref={ref}>
       <h2>{column.title}</h2>
-      {column.cards?.map((card) => (
+      {column.cards?.map((card: any) => (
         <Card key={card.id} card={card} />
       ))}
     </div>
@@ -117,7 +33,28 @@ function Column({ column }: { column: any }) {
 }
 
 export function KanbanBoard() {
-  const [columns, setColumns] = useState<any[]>(initialColumns);
+  const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+
+  
+  const { data: columns, isLoading } = useQuery({
+    queryKey: ["columns", id],
+    queryFn: () => columnApi.getAllColumns(),
+    enabled: !!id,
+  });
+
+  // useMutation — met a jour la colonne d'une card apres le drag
+  const { mutate: moveCard } = useMutation({
+    mutationFn: ({ cardId, columnId }: { cardId: number; columnId: number }) =>
+      cardApi.updateCard({
+        id: cardId,
+        updateCardRequest: { columnId },
+      }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["columns", id] });
+    },
+  });
 
   const handleDragEnd: DragEndEvent = (e) => {
     const sourceId = e.operation.source?.id;
@@ -127,48 +64,27 @@ export function KanbanBoard() {
     const cardId = sourceId as number;
     const newColumnId = targetId as number;
 
-    const cardColumn = columns.find((col) =>
-      col.cards?.some((card) => card.id === cardId),
+    const cardColumn = columns?.find((col: any) =>
+      col.cards?.some((card: any) => card.id === cardId)
     );
     if (!cardColumn || cardColumn.id === newColumnId) return;
 
-    const movedCard = cardColumn.cards?.find((card) => card.id === cardId);
-    if (!movedCard) return;
-
-    setColumns((prevColumns) =>
-      prevColumns.map((column) => {
-        if (!column.cards) return column;
-
-        if (column.id === cardColumn.id) {
-          // Remove card from old column
-          return {
-            ...column,
-            cards: column.cards?.filter((card) => card.id !== cardId),
-          };
-        }
-
-        if (column.id === newColumnId) {
-          // Add card to new column
-          return {
-            ...column,
-            cards: [
-              ...(column.cards || []),
-              { ...movedCard, columnId: newColumnId },
-            ],
-          };
-        }
-
-        return column;
-      }),
-    );
+    moveCard({ cardId, columnId: newColumnId });
   };
+
+  if (isLoading) return <div>Chargement...</div>;
+
+  if (!columns) {
+    navigate("*", { replace: true });
+    return null;
+  }
 
   return (
     <section className={styles.kanbanBoard}>
-      <h1>Open Hospital</h1>
+      <h1>Kanban Board</h1>
       <div className={styles.boardsContainer}>
         <DragDropProvider onDragEnd={handleDragEnd}>
-          {columns.map((column) => (
+          {columns.map((column: any) => (
             <Column key={column.id} column={column} />
           ))}
         </DragDropProvider>

@@ -1,4 +1,4 @@
-import { Configuration, UserApi, ProjectApi, ColumnApi, CardApi } from "./api";
+import { Configuration, UserApi, ProjectApi, ColumnApi, CardApi, AuthApi } from "./api";
 
 const authMiddleware = {
   pre: async (context: any) => {
@@ -22,6 +22,7 @@ const privateConfig = new Configuration({
   middleware: [authMiddleware],
 });
 
+export const authApi = new AuthApi(publicConfig);  // ← ajouté
 export const userApi = new UserApi(publicConfig);
 export const projectApi = new ProjectApi(privateConfig);
 export const columnApi = new ColumnApi(privateConfig);

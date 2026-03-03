@@ -5,8 +5,8 @@ import {
   type DragEndEvent,
 } from "@dnd-kit/react";
 import styles from "./kanbanboard.module.css";
-import { useState, useEffect } from "react";
-import { columnApi } from "../../services"; 
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { columnApi, cardApi } from "../../services";
 
 function CardItem({ card }: { card: any }) {
   const { ref } = useDraggable({ id: card.id || 0 });
@@ -32,19 +32,23 @@ function ColumnItem({ column }: { column: any }) {
 }
 
 export function KanbanBoard() {
-  const [columns, setColumns] = useState<any[]>([]);
+  const queryClient = useQueryClient();
 
-  useEffect(() => {
-    const loadColumns = async () => {
-      try {
-        const response = await columnApi.getAllColumns();
-        setColumns(response);
-      } catch (error) {
-        console.error("Error loading columns", error);
-      }
-    };
-    loadColumns();
-  }, []);
+  const { data: columns = [], isLoading, error } = useQuery({
+    queryKey: ["columns"],
+    queryFn: () => columnApi.getAllColumns(),
+  });
+
+  const { mutate: moveCard } = useMutation({
+    mutationFn: ({ id, columnId }: { id: number; columnId: number }) =>
+      cardApi.updateCard({
+        id,
+        updateCardRequest: { columnId },
+      }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["columns"] });
+    },
+  });
 
   const handleDragEnd: DragEndEvent = (e) => {
     const sourceId = e.operation.source?.id;
@@ -54,40 +58,18 @@ export function KanbanBoard() {
     const cardId = sourceId as number;
     const newColumnId = targetId as number;
 
-    const cardColumn = columns.find((col) =>
-      col.cards?.some((card: any) => card.id === cardId)
-    );
-    if (!cardColumn || cardColumn.id === newColumnId) return;
-
-    const movedCard = cardColumn.cards?.find((card: any) => card.id === cardId);
-    if (!movedCard) return;
-
-    setColumns((prevColumns) =>
-      prevColumns.map((column) => {
-        if (!column.cards) return column;
-        if (column.id === cardColumn.id) {
-          return {
-            ...column,
-            cards: column.cards.filter((card: any) => card.id !== cardId),
-          };
-        }
-        if (column.id === newColumnId) {
-          return {
-            ...column,
-            cards: [...column.cards, { ...movedCard, columnId: newColumnId }],
-          };
-        }
-        return column;
-      })
-    );
+    moveCard({ id: cardId, columnId: newColumnId });
   };
+
+  if (isLoading) return <p>Loading columns...</p>;
+  if (error) return <p>Error loading columns</p>;
 
   return (
     <section className={styles.kanbanBoard}>
       <h1>Kanban Board</h1>
       <div className={styles.boardsContainer}>
         <DragDropProvider onDragEnd={handleDragEnd}>
-          {columns.map((column) => (
+          {columns.map((column: any) => (
             <ColumnItem key={column.id} column={column} />
           ))}
         </DragDropProvider>

@@ -1,13 +1,11 @@
 import { useFormik } from "formik";
-import { useState } from "react";
-import type { Project } from "../../api";
 import { TextField } from "../textField/TextField";
 import * as Yup from "yup";
 
-export type ProjectFormValues = Pick<
-  Project,
-  "title" | "description" | "columns" | "members"
->;
+export type ProjectFormValues = {
+  title: string;
+  description: string;
+};
 
 export function ProjectForm({
   isPending,
@@ -16,13 +14,12 @@ export function ProjectForm({
 }: {
   isPending?: boolean;
   handleSubmit: (values: ProjectFormValues) => void;
+  onClose?: () => void;
 }) {
   const formik = useFormik<ProjectFormValues>({
     initialValues: {
       title: "",
       description: "",
-      columns: [],
-      members: [],
     },
     validationSchema: Yup.object({
       title: Yup.string().required("Title is required"),
@@ -53,6 +50,7 @@ export function ProjectForm({
         onChange={formik.handleChange}
         onBlur={formik.handleBlur}
       />
+      <button type="button" onClick={onClose}>Cancel</button>
       <button type="submit">{isPending ? "Loading..." : "Create"}</button>
     </form>
   );

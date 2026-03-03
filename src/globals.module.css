@@ -7,3 +7,14 @@
 .main {
   flex: 1;
 }
+
+.formField {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+.errorMessage {
+  color: red;
+  font-size: small;
+}

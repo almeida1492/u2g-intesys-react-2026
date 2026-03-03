@@ -1,50 +1,58 @@
 import { useFormik } from "formik";
+import { useState } from "react";
+import type { Project } from "../../api";
+import { TextField } from "../textField/TextField";
 import * as Yup from "yup";
 
-interface ProjectFormProps {
-  onSubmit: (values: { title: string }) => void;
-}
+export type ProjectFormValues = Pick<
+  Project,
+  "title" | "description" | "columns" | "members"
+>;
 
-export function ProjectForm({ onSubmit }: ProjectFormProps) {
-  const formik = useFormik({
+export function ProjectForm({
+  isPending,
+  handleSubmit,
+}: {
+  isPending?: boolean;
+  handleSubmit: (values: ProjectFormValues) => void;
+}) {
+  const formik = useFormik<ProjectFormValues>({
     initialValues: {
       title: "",
+      description: "",
+      columns: [],
+      members: [],
     },
-   
     validationSchema: Yup.object({
-      title: Yup.string()
-        .min(5, "Minimum 5 characters")
-        .required("This field is required"),
+      title: Yup.string().required("Title is required"),
+      description: Yup.string().required("Description is required"),
     }),
-
-    onSubmit: (values) => {
-      onSubmit(values);
-      formik.resetForm(); 
-    },
+    onSubmit: handleSubmit,
   });
 
   return (
     <form onSubmit={formik.handleSubmit}>
-      <div>
-        <input
-          type="text"
-          placeholder="Project Title"
-          id="title"
-          name="title"
-         
-          value={formik.values.title}
-          onChange={formik.handleChange} 
-          onBlur={formik.handleBlur}
-        />
-
-        {formik.touched.title && formik.errors.title && (
-          <span style={{ color: "red", display: "block" }}>
-            {formik.errors.title}
-          </span>
-        )}
-      </div>
-
-      <button type="submit">Create</button>
+      <TextField
+        id="title"
+        name="title"
+        label="Title"
+        error={formik.errors.title}
+        touched={formik.touched.title}
+        value={formik.values.title}
+        onChange={formik.handleChange}
+        onBlur={formik.handleBlur}
+      />
+      <TextField
+        id="description"
+        name="description"
+        label="Description"
+        error={formik.errors.description}
+        touched={formik.touched.description}
+        value={formik.values.description}
+        onChange={formik.handleChange}
+        onBlur={formik.handleBlur}
+      />
+      <button type="submit">{isPending ? "Loading..." : "Create"}</button>
     </form>
   );
 }

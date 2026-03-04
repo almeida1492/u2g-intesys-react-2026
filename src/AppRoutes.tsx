@@ -9,6 +9,7 @@ import { Login } from "./pages/login/Login";
 import { NewProject } from "./pages/newProject/NewProject";
 import { Register } from "./pages/register/Register";
 import { Settings } from "./pages/settings/Settings";
+import { ProjectsPage } from "./pages/projects/Projects";
 
 export const appRouter = createBrowserRouter([
   {
@@ -36,6 +37,7 @@ export const appRouter = createBrowserRouter([
     ),
     children: [
       { index: true, element: <Dashboard /> },
+      { path: "projects", element: <ProjectsPage /> },
       { path: "projects/:id", element: <KanbanBoard /> },
       { path: "projects/create", element: <NewProject /> },
       {

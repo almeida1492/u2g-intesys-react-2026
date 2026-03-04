@@ -1,5 +1,5 @@
-import { BrowserRouter } from "react-router";
-import { AppRoutes } from "./AppRoutes";
+import { RouterProvider } from "react-router";
+import { appRouter } from "./AppRoutes";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 // Create a client
@@ -9,9 +9,7 @@ function App() {
   return (
     // Provide the client to your App
     <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
-        <AppRoutes />
-      </BrowserRouter>
+      <RouterProvider router={appRouter} />
     </QueryClientProvider>
   );
 }

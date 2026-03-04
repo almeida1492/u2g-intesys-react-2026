@@ -28,5 +28,7 @@ const apiConfig = new Configuration({
 export const userApi = new UserApi(apiConfig);
 export const authApi = new AuthApi(apiConfig);
 export const projectApi = new ProjectApi(apiConfig);
-export const columnApi = new ColumnApi(apiConfig);
+
 export const cardApi = new CardApi(apiConfig);
+
+export const columnApi = new ColumnApi(apiConfig);

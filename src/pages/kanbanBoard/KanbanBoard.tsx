@@ -4,11 +4,11 @@ import {
   useDroppable,
   type DragEndEvent,
 } from "@dnd-kit/react";
-// import type { Card, Column } from "../../api";
-import styles from "./kanbanboard.module.css";
 import { useState } from "react";
+import type { Card, Column } from "../../api";
+import styles from "./kanbanboard.module.css";
 
-const initialColumns: any = [
+const initialColumns: Column[] = [
   {
     id: 1,
     title: "TO DO",
@@ -89,7 +89,7 @@ const initialColumns: any = [
   },
 ];
 
-function Card({ card }: { card: any }) {
+function Card({ card }: { card: Card }) {
   const { ref } = useDraggable({
     id: card.id || 0,
   });
@@ -102,7 +102,7 @@ function Card({ card }: { card: any }) {
   );
 }
 
-function Column({ column }: { column: any }) {
+function Column({ column }: { column: Column }) {
   const { ref } = useDroppable({
     id: column.id || 0,
   });
@@ -117,7 +117,7 @@ function Column({ column }: { column: any }) {
 }
 
 export function KanbanBoard() {
-  const [columns, setColumns] = useState<any[]>(initialColumns);
+  const [columns, setColumns] = useState<Column[]>(initialColumns);
 
   const handleDragEnd: DragEndEvent = (e) => {
     const sourceId = e.operation.source?.id;

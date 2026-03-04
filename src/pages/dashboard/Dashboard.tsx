@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router";
 import globalStyles from "../../globals.module.css";
 import { projectApi } from "../../services";
+import { TextField } from "../../components/textField/TextField";
 
 export function Dashboard() {
   const { data: projects, isFetching } = useQuery({
@@ -19,6 +20,8 @@ export function Dashboard() {
         <Link to="projects/create">Create Project</Link>
         <Link to="projects/update/1">Update Project</Link>
       </nav>
+
+      <TextField label="Search projects" placeholder="Type to search..." />
 
       {isFetching ? (
         <p>Loading...</p>

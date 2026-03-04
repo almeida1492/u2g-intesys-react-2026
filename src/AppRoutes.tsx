@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router";
+import { createBrowserRouter } from "react-router";
 import { PrivateRoute } from "./components/privateRoute/PrivateRoute";
 import { PrivateRouteLayout } from "./components/privateRouteLayout/PrivateRouteLayout";
 import { ProjectForm } from "./components/projectForm/ProjectForm";
@@ -6,50 +6,47 @@ import { PublicRouteLayout } from "./components/publicRouteLayout/PublicRouteLay
 import { Dashboard } from "./pages/dashboard/Dashboard";
 import { KanbanBoard } from "./pages/kanbanBoard/KanbanBoard";
 import { Login } from "./pages/login/Login";
+import { NewProject } from "./pages/newProject/NewProject";
 import { Register } from "./pages/register/Register";
 import { Settings } from "./pages/settings/Settings";
-import { NewProject } from "./pages/newProject/NewProject";
-import { NotFound } from "./pages/notFound/NotFound";
 
-export const AppRoutes = () => {
-  return (
-    <Routes>
-      <Route
-        path="/login"
-        element={
-          <PublicRouteLayout>
-            <Login />
-          </PublicRouteLayout>
-        }
-      />
-      <Route
-        path="/register"
-        element={
-          <PublicRouteLayout>
-            <Register />
-          </PublicRouteLayout>
-        }
-      />
-
-      <Route
-        path="/"
-        element={
-          <PrivateRoute>
-            <PrivateRouteLayout />
-          </PrivateRoute>
-        }
-      >
-        <Route index element={<Dashboard />} />
-        <Route path="projects/:id" element={<KanbanBoard />} />
-        <Route path="projects/create" element={<NewProject />} />
-        <Route
-          path="projects/update/:id"
-          element={<ProjectForm handleSubmit={() => {}} />}
-        />
-        <Route path="settings" element={<Settings />} />
-      </Route>
-      <Route path="404" element={<NotFound />} />
-      <Route path="*" element={<NotFound />} />
-    </Routes>
-  );
-};
+export const appRouter = createBrowserRouter([
+  {
+    path: "/login",
+    element: (
+      <PublicRouteLayout>
+        <Login />
+      </PublicRouteLayout>
+    ),
+  },
+  {
+    path: "/register",
+    element: (
+      <PublicRouteLayout>
+        <Register />
+      </PublicRouteLayout>
+    ),
+  },
+  {
+    path: "/",
+    element: (
+      <PrivateRoute>
+        <PrivateRouteLayout />
+      </PrivateRoute>
+    ),
+    children: [
+      { index: true, element: <Dashboard /> },
+      { path: "projects/:id", element: <KanbanBoard /> },
+      { path: "projects/create", element: <NewProject /> },
+      {
+        path: "projects/update/:id",
+        element: <ProjectForm handleSubmit={() => {}} />,
+      },
+      {
+        path: "settings",
+        element: <Settings />,
+        errorElement: <div>Something went wrong. Retry later.</div>,
+      },
+    ],
+  },
+]);

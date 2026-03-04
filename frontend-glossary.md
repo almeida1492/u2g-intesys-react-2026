@@ -345,6 +345,96 @@ Characteristics:
 
 ---
 
+## 🚀 Optimistic Updates
+
+An **optimistic update** is a UI pattern where the interface updates **immediately** after a user action, before the server confirms the change.
+
+Instead of waiting for the API response:
+
+1. The UI updates instantly.
+
+2. The request is sent to the server.
+
+3. If the request fails, the UI rolls back to the previous state.
+
+This improves perceived performance and user experience.
+
+### Why Use Optimistic Updates?
+
+Without optimistic updates:
+
+- User clicks "Move card"
+
+- UI freezes or shows loading
+
+- Server responds
+
+- UI updates
+
+With optimistic updates:
+
+- User clicks "Move card"
+
+- UI updates immediately
+
+- Server confirms silently in background
+
+---
+
+## 🛑 Error Boundaries in a React SPA
+
+An **Error Boundary** is a React component that catches JavaScript errors in its child component tree during rendering.
+
+Without an error boundary:
+
+- A rendering error can break the entire application.
+
+With an error boundary:
+
+- The error is caught
+
+- A fallback UI is displayed
+
+- The rest of the application continues working
+
+### What Error Boundaries Catch
+
+They catch errors in:
+
+- Rendering
+
+- Lifecycle methods
+
+- Constructors
+
+They do NOT catch errors in:
+
+- Event handlers
+
+- Async code (like `setTimeout`)
+
+- Server-side rendering
+
+### Why They Matter in SPAs
+
+In a Single Page Application:
+
+- Everything runs in one JavaScript context
+
+- A rendering crash can blank the entire UI
+
+Error boundaries:
+
+- Improve resilience
+
+- Allow partial failure
+
+- Enable better UX
+
+- Are essential in production-ready apps
+
+---
+
 # 🧠 Mental Model Summary
 
 - **HTML** → Structure\

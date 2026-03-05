@@ -5,8 +5,11 @@ import {
   type DragEndEvent,
 } from "@dnd-kit/react";
 import styles from "./kanbanboard.module.css";
+import { Button } from "../../components/button/Button";
+import { Link, useParams } from "react-router";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { columnApi, cardApi } from "../../services";
+
 
 function CardItem({ card }: { card: any }) {
   const { ref } = useDraggable({ id: card.id || 0 });
@@ -19,14 +22,22 @@ function CardItem({ card }: { card: any }) {
   );
 }
 
-function ColumnItem({ column }: { column: any }) {
-  const { ref } = useDroppable({ id: column.id || 0 });
+function Column({ column }: { column: Column }) {
+  const { id } = useParams<{ id: string }>();
+
+  const { ref } = useDroppable({
+    id: column.id || 0,
+  });
+
   return (
     <div className={styles.column} ref={ref}>
       <h2>{column.title}</h2>
       {column.cards?.map((card: any) => (
         <CardItem key={card.id} card={card} />
       ))}
+      <Link to={`create-card`}>
+        <Button asChild>Add Card</Button>
+      </Link>
     </div>
   );
 }

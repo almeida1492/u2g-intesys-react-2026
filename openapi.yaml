@@ -296,6 +296,7 @@ paths:
         - $ref: "#/components/parameters/Page"
         - $ref: "#/components/parameters/Size"
         - $ref: "#/components/parameters/Sort"
+        - name: search 
       responses:
         "200":
           description: Paginated list of projects

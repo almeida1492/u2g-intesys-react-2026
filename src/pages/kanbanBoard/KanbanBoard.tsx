@@ -7,6 +7,8 @@ import {
 import { useState } from "react";
 import type { Card, Column } from "../../api";
 import styles from "./kanbanboard.module.css";
+import { Button } from "../../components/button/Button";
+import { Link, useParams } from "react-router";
 
 const initialColumns: Column[] = [
   {
@@ -103,15 +105,21 @@ function Card({ card }: { card: Card }) {
 }
 
 function Column({ column }: { column: Column }) {
+  const { id } = useParams<{ id: string }>();
+
   const { ref } = useDroppable({
     id: column.id || 0,
   });
+
   return (
     <div key={column.id} className={styles.column} ref={ref}>
       <h2>{column.title}</h2>
       {column.cards?.map((card) => (
         <Card key={card.id} card={card} />
       ))}
+      <Link to={`create-card`}>
+        <Button asChild>Add Card</Button>
+      </Link>
     </div>
   );
 }

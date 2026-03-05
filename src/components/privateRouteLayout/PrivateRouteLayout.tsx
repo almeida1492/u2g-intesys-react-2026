@@ -7,9 +7,12 @@ export const PrivateRouteLayout = () => {
   return (
     <div className={styles.app}>
       <Header />
-      <Sidebar />
-
-      <Outlet />
+      <div className={styles.container}>
+        <Sidebar />
+        <main className={styles.main}>
+          <Outlet />
+        </main>
+      </div>
     </div>
   );
 };

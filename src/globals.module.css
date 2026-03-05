@@ -4,8 +4,15 @@
   min-height: 100dvh;
 }
 
+.container {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+}
+
 .main {
   flex: 1;
+  padding: 16px;
 }
 
 .formField {
@@ -17,4 +24,10 @@
 .errorMessage {
   color: red;
   font-size: small;
+}
+
+.divider {
+  height: 1px;
+  background-color: #ccc;
+  margin: 1rem 0;
 }

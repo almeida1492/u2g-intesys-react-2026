@@ -4,6 +4,7 @@ import * as Yup from "yup";
 import globalStyles from "../../globals.module.css";
 import { authApi, userApi } from "../../services";
 import styles from "./login.module.css";
+import { Button } from "../../components/button/Button";
 
 export const Login = () => {
   const navigate = useNavigate();
@@ -75,7 +76,7 @@ export const Login = () => {
             )}
           </div>
 
-          <button type="submit">Login</button>
+          <Button type="submit">Login</Button>
         </form>
       </div>
     </main>

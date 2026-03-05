@@ -9,6 +9,7 @@ import { Login } from "./pages/login/Login";
 import { NewProject } from "./pages/newProject/NewProject";
 import { Register } from "./pages/register/Register";
 import { Settings } from "./pages/settings/Settings";
+import { CardForm } from "./components/cardForm/CardForm";
 
 export const appRouter = createBrowserRouter([
   {
@@ -41,6 +42,10 @@ export const appRouter = createBrowserRouter([
       {
         path: "projects/update/:id",
         element: <ProjectForm handleSubmit={() => {}} />,
+      },
+      {
+        path: "projects/:id/create-card",
+        element: <CardForm />,
       },
       {
         path: "settings",

@@ -4,6 +4,7 @@ import * as Yup from "yup";
 import { columnApi, fetchMe } from "../../services";
 import type { Column } from "../../api";
 import "./CardForm.css";
+import { useParams } from "react-router";
 
 type Props = {
   onSubmit: (values: {
@@ -13,9 +14,10 @@ type Props = {
     columnId: string;
   }) => void;
   onClose: () => void;
+  projectId: number;
 };
 
-export const CardForm = ({ onSubmit, onClose }: Props) => {
+export const CardForm = ({ onSubmit, onClose, projectId }: Props) => {
   const [columns, setColumns] = useState<Column[]>([]);
   const [users, setUsers] = useState<{ username: string }[]>([]);
 
@@ -23,11 +25,13 @@ export const CardForm = ({ onSubmit, onClose }: Props) => {
     const loadData = async () => {
       try {
         const [columnsData, meData] = await Promise.all([
-          columnApi.getAllColumns(),
+          columnApi.getColumnsByProjectId({ id: projectId }),
           fetchMe(),
         ]);
+        console.log("Loaded columns:", columnsData);
         setColumns(columnsData);
-        setUsers([meData]);
+        console.log("Current user:", meData);
+        setUsers([{ username: meData.username ?? "Unknown" }]);
       } catch (error) {
         console.error("Error loading form data", error);
       }
@@ -46,10 +50,15 @@ export const CardForm = ({ onSubmit, onClose }: Props) => {
 
   return (
     <Formik
-      initialValues={{ title: "", description: "", assignedTo: "", columnId: "" }}
+      initialValues={{
+        title: "",
+        description: "",
+        assignedTo: "",
+        columnId: "",
+      }}
       validationSchema={validationSchema}
       onSubmit={(values, actions) => {
-        onSubmit(values);
+        onSubmit(values); // ← passe juste les valeurs, KanbanBoard gère la création
         actions.resetForm();
       }}
     >
@@ -58,8 +67,17 @@ export const CardForm = ({ onSubmit, onClose }: Props) => {
           <Field name="title" placeholder="Card title" className="cf-input" />
           <ErrorMessage name="title" component="div" className="cf-error" />
 
-          <Field as="textarea" name="description" placeholder="Description" className="cf-textarea" />
-          <ErrorMessage name="description" component="div" className="cf-error" />
+          <Field
+            as="textarea"
+            name="description"
+            placeholder="Description"
+            className="cf-textarea"
+          />
+          <ErrorMessage
+            name="description"
+            component="div"
+            className="cf-error"
+          />
 
           <Field as="select" name="assignedTo" className="cf-select">
             <option value="">Assign user</option>
@@ -69,7 +87,11 @@ export const CardForm = ({ onSubmit, onClose }: Props) => {
               </option>
             ))}
           </Field>
-          <ErrorMessage name="assignedTo" component="div" className="cf-error" />
+          <ErrorMessage
+            name="assignedTo"
+            component="div"
+            className="cf-error"
+          />
 
           <Field as="select" name="columnId" className="cf-select">
             <option value="">Select column</option>
@@ -82,8 +104,16 @@ export const CardForm = ({ onSubmit, onClose }: Props) => {
           <ErrorMessage name="columnId" component="div" className="cf-error" />
 
           <div className="cf-actions">
-            <button type="button" className="cf-cancel-btn" onClick={onClose}>Cancel</button>
-            <button type="submit" className="cf-add-btn" disabled={isSubmitting}>Add</button>
+            <button type="button" className="cf-cancel-btn" onClick={onClose}>
+              Cancel
+            </button>
+            <button
+              type="submit"
+              className="cf-add-btn"
+              disabled={isSubmitting}
+            >
+              Add
+            </button>
           </div>
         </Form>
       )}

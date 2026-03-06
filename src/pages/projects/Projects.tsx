@@ -1,155 +1,139 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import { useDebounce } from "../../components/hooks/useDebounce";
-import { useProjects } from "../../components/hooks/useProjects";
 import { projectApi } from "../../services";
-import { ProjectForm } from "../../components/projectForm/ProjectForm";
-import { TextField } from "../../components/textField/TextField";
+import { ProjectForm, type ProjectFormValues } from "../../components/projectForm/ProjectForm";
+import { Modal } from "../../components/modal/Modal";
 
-function highlight(text: string, term: string) {
-  if (!term) return <>{text}</>;
-  const parts = text.split(new RegExp(`(${term})`, "gi"));
-  return (
-    <>
-      {parts.map((part, i) =>
-        part.toLowerCase() === term.toLowerCase() ? (
-          <mark
-            key={i}
-            style={{
-              backgroundColor: "#fef08a",
-              borderRadius: "3px",
-              padding: "0 2px",
-              fontWeight: 600,
-            }}
-          >
-            {part}
-          </mark>
-        ) : (
-          part
-        ),
-      )}
-    </>
-  );
-}
+type Project = {
+  id: number;
+  title: string;
+  description?: string;
+};
 
 export function ProjectsPage() {
   const navigate = useNavigate();
+
+  const [projects, setProjects] = useState<Project[]>([]);
   const [search, setSearch] = useState("");
-  const [showForm, setShowForm] = useState(false);
+  const [debouncedSearch, setDebouncedSearch] = useState("");
 
-  const debouncedSearch = useDebounce(search, 500);
-  const isSearching = search !== debouncedSearch;
+  const [editingProject, setEditingProject] = useState<Project | null>(null);
 
-  const {
-    data: projects = [],
-    isLoading,
-    isError,
-    refetch,
-  } = useProjects(debouncedSearch);
+  // debounce search
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearch(search);
+    }, 400);
 
-  const handleCreateProject = async (values: any) => {
-    try {
-      await projectApi.createProject({
-        createProjectRequest: {
-          title: values.title,
-          description: values.description,
-          members: [],
-        },
-      });
-      setShowForm(false);
-      refetch();
-    } catch (error) {
-      console.error("Error creating project", error);
-    }
-  };
+    return () => clearTimeout(timer);
+  }, [search]);
+
+  // load projects
+  async function loadProjects() {
+    const res = await projectApi.getProjects();
+    setProjects(res.data);
+  }
+
+  useEffect(() => {
+    loadProjects();
+  }, []);
+
+  // filter projects
+  const filteredProjects = projects.filter((p) =>
+    p.title.toLowerCase().includes(debouncedSearch.toLowerCase())
+  );
+
+  // update project
+  async function handleUpdate(values: ProjectFormValues) {
+    if (!editingProject) return;
+
+    await projectApi.updateProject(editingProject.id, values);
+
+    setEditingProject(null);
+    loadProjects();
+  }
 
   return (
-    <div style={{ padding: "20px" }}>
+    <div style={{ padding: "30px" }}>
       <h1>Projects</h1>
 
-      <div
+      {/* search */}
+      <input
+        type="text"
+        placeholder="Search project..."
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
         style={{
-          display: "flex",
-          alignItems: "center",
-          gap: "12px",
+          padding: "8px",
           marginBottom: "20px",
+          width: "300px",
         }}
-      >
-        <TextField
-          variant="search"
-          placeholder="Search projects..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          onClear={() => setSearch("")}
-        />
-        <button onClick={() => setShowForm(true)}>+ New Project</button>
-      </div>
+      />
 
-      {showForm && (
-        <ProjectForm
-          handleSubmit={handleCreateProject}
-          onClose={() => setShowForm(false)}
-        />
-      )}
-
-      <div>
-        {isLoading || isSearching ? (
-          <p style={{ color: "#94a3b8", fontStyle: "italic" }}>
-            Recherche en cours...
-          </p>
-        ) : isError ? (
-          <p>Erreur lors du chargement.</p>
-        ) : projects.length === 0 && debouncedSearch ? (
-          <p>
-            Aucun projet trouvé pour "<strong>{debouncedSearch}</strong>".{" "}
-            <span
-              style={{
-                color: "#6366f1",
-                cursor: "pointer",
-                textDecoration: "underline",
-              }}
-              onClick={() => setSearch("")}
-            >
-              Effacer la recherche
-            </span>
-          </p>
-        ) : projects.length === 0 ? (
-          <p>Aucun projet pour l'instant.</p>
-        ) : (
-          projects.map((project: any) => (
+      {/* list */}
+      <div style={{ display: "grid", gap: "16px" }}>
+        {filteredProjects.map((project) => (
+          <div
+            key={project.id}
+            style={{
+              border: "1px solid #ddd",
+              borderRadius: "8px",
+              padding: "16px",
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              background: "white",
+            }}
+          >
+            {/* project content */}
             <div
-              key={project.id}
-              style={{
-                cursor: "pointer",
-                border: "1px solid #e2e8f0",
-                padding: "14px 16px",
-                marginBottom: "10px",
-                borderRadius: "10px",
-                transition: "box-shadow 0.2s ease, border-color 0.2s ease",
-              }}
-              onMouseEnter={(e) => {
-                (e.currentTarget as HTMLDivElement).style.boxShadow =
-                  "0 2px 12px rgba(99,102,241,0.1)";
-                (e.currentTarget as HTMLDivElement).style.borderColor =
-                  "#c7d2fe";
-              }}
-              onMouseLeave={(e) => {
-                (e.currentTarget as HTMLDivElement).style.boxShadow = "none";
-                (e.currentTarget as HTMLDivElement).style.borderColor =
-                  "#e2e8f0";
-              }}
+              style={{ cursor: "pointer", flex: 1 }}
               onClick={() => navigate(`/projects/${project.id}`)}
             >
-              <h3 style={{ margin: "0 0 4px 0" }}>
-                {highlight(project.title, debouncedSearch)}
-              </h3>
-              <p style={{ margin: 0, color: "#64748b", fontSize: "14px" }}>
-                {highlight(project.description ?? "", debouncedSearch)}
+              <h3 style={{ margin: 0 }}>{project.title}</h3>
+              <p style={{ margin: "4px 0 0 0", color: "#555" }}>
+                {project.description}
               </p>
             </div>
-          ))
-        )}
+
+            {/* edit button */}
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setEditingProject(project);
+              }}
+              style={{
+                marginLeft: "12px",
+                padding: "6px 12px",
+                borderRadius: "6px",
+                border: "none",
+                background: "#6366f1",
+                color: "white",
+                cursor: "pointer",
+              }}
+            >
+              Edit
+            </button>
+          </div>
+        ))}
       </div>
+
+      {/* edit modal */}
+      <Modal
+        isOpen={!!editingProject}
+        onClose={() => setEditingProject(null)}
+        title="Edit Project"
+      >
+        <ProjectForm
+          initialValues={{
+            title: editingProject?.title ?? "",
+            description: editingProject?.description ?? "",
+          }}
+          submitLabel="Update Project"
+          handleSubmit={handleUpdate}
+          onClose={() => setEditingProject(null)}
+        />
+      </Modal>
     </div>
   );
 }

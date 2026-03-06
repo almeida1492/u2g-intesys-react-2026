@@ -22,8 +22,10 @@ const privateConfig = new Configuration({
   middleware: [authMiddleware],
 });
 
-export const authApi = new AuthApi(publicConfig);  // ← ajouté
-export const userApi = new UserApi(publicConfig);
+export const authApi = new AuthApi(publicConfig);
+export const userApi = new UserApi(privateConfig);
 export const projectApi = new ProjectApi(privateConfig);
 export const columnApi = new ColumnApi(privateConfig);
 export const cardApi = new CardApi(privateConfig);
+
+export const fetchMe = () => userApi.me();

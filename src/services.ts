@@ -1,15 +1,7 @@
-import {
-  AuthApi,
-  CardApi,
-  ColumnApi,
-  Configuration,
-  ProjectApi,
-  UserApi,
-  type Middleware,
-} from "./api";
+import { Configuration, UserApi, ProjectApi, ColumnApi, CardApi, AuthApi } from "./api";
 
-const addTokenToHeadersMiddleware: Middleware = {
-  pre: async (context) => {
+const authMiddleware = {
+  pre: async (context: any) => {
     const token = localStorage.getItem("token");
     if (token) {
       context.init.headers = {
@@ -17,20 +9,23 @@ const addTokenToHeadersMiddleware: Middleware = {
         Authorization: `Bearer ${token}`,
       };
     }
+    return context;
   },
 };
 
-const apiConfig = new Configuration({
+const publicConfig = new Configuration({
   basePath: "http://localhost:8080/api",
-  middleware: [addTokenToHeadersMiddleware],
 });
 
-export const userApi = new UserApi(apiConfig);
+const privateConfig = new Configuration({
+  basePath: "http://localhost:8080/api",
+  middleware: [authMiddleware],
+});
 
-export const authApi = new AuthApi(apiConfig);
+export const authApi = new AuthApi(publicConfig);
+export const userApi = new UserApi(privateConfig);
+export const projectApi = new ProjectApi(privateConfig);
+export const columnApi = new ColumnApi(privateConfig);
+export const cardApi = new CardApi(privateConfig);
 
-export const projectApi = new ProjectApi(apiConfig);
-
-export const cardApi = new CardApi(apiConfig);
-
-export const columnApi = new ColumnApi(apiConfig);
+export const fetchMe = () => userApi.me();

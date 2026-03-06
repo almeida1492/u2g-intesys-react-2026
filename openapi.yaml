@@ -18,6 +18,7 @@ security:
   - bearerAuth: []
 
 paths:
+
   /register:
     post:
       operationId: register
@@ -29,28 +30,28 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/RegisterRequest"
+              $ref: '#/components/schemas/RegisterRequest'
       responses:
-        "201":
+        '201':
           description: User created
-        "400":
+        '400':
           description: Bad request
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "409":
+                $ref: '#/components/schemas/ErrorResponse'
+        '409':
           description: Username already exists
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "500":
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
           description: Internal server error
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
+                $ref: '#/components/schemas/ErrorResponse'
 
   /login:
     post:
@@ -58,41 +59,41 @@ paths:
       tags: [Auth]
       summary: Login user
       security:
-        - basicAuth: []
+        - basicAuth: [ ]
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/LoginRequest"
+              $ref: '#/components/schemas/LoginRequest'
       responses:
-        "200":
+        '200':
           description: JWT token
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/AuthResponse"
-        "400":
+                $ref: '#/components/schemas/AuthResponse'
+        '400':
           description: Bad request
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "401":
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
           description: Invalid credentials
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "500":
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
           description: Internal server error
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
+                $ref: '#/components/schemas/ErrorResponse'
 
   /personal-data:
-    put:
+    patch:
       operationId: updatePersonalData
       tags: [User]
       summary: Update personal data
@@ -101,47 +102,47 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/UpdatePersonalDataRequest"
+              $ref: '#/components/schemas/UpdatePersonalDataRequest'
       responses:
-        "200":
+        '200':
           description: User updated
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/UserResponse"
-        "400":
+                $ref: '#/components/schemas/UserResponse'
+        '400':
           description: Bad request
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "401":
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "403":
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "404":
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
           description: User not found
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "500":
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
           description: Internal server error
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
+                $ref: '#/components/schemas/ErrorResponse'
 
   /user-data:
-    put:
+    patch:
       operationId: updateUsername
       tags: [User]
       summary: Update username
@@ -150,47 +151,47 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/UpdateUsernameRequest"
+              $ref: '#/components/schemas/UpdateUsernameRequest'
       responses:
-        "200":
+        '200':
           description: User updated
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/UserResponse"
-        "400":
+                $ref: '#/components/schemas/UserResponse'
+        '400':
           description: Bad request
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "401":
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "403":
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "409":
+                $ref: '#/components/schemas/ErrorResponse'
+        '409':
           description: Username already exists
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "500":
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
           description: Internal server error
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
+                $ref: '#/components/schemas/ErrorResponse'
 
   /update-password:
-    put:
+    patch:
       operationId: updatePassword
       tags: [User]
       summary: Update password
@@ -199,40 +200,40 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/UpdatePasswordRequest"
+              $ref: '#/components/schemas/UpdatePasswordRequest'
       responses:
-        "204":
+        '204':
           description: Password updated
-        "400":
+        '400':
           description: Bad request
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "401":
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "403":
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "404":
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
           description: User not found
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "500":
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
           description: Internal server error
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
+                $ref: '#/components/schemas/ErrorResponse'
 
   /user/{userId}:
     delete:
@@ -240,42 +241,42 @@ paths:
       tags: [User]
       summary: Delete a user by ID
       parameters:
-        - $ref: "#/components/parameters/userId"
+        - $ref: '#/components/parameters/userId'
       responses:
-        "204":
+        '204':
           description: User deleteById
-        "401":
+        '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "403":
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "404":
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
           description: User not found
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "500":
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
           description: Internal server error
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
+                $ref: '#/components/schemas/ErrorResponse'
 
   /user/me:
     get:
       summary: Get current user info from JWT token
-      tags: [User]
+      tags: [ User ]
       operationId: me
       responses:
-        "200":
+        '200':
           description: User info returned
           content:
             application/json:
@@ -284,7 +285,24 @@ paths:
                 properties:
                   username:
                     type: string
-        "401":
+        '401':
+          description: Missing or invalid token
+  
+  /user/all:
+    get:
+      summary: Get all users
+      tags: [ User ]
+      operationId: getAllUsers
+      responses:
+        '200':
+          description: List of users returned
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        '401':
           description: Missing or invalid token
 
   /project:
@@ -297,39 +315,39 @@ paths:
         - $ref: "#/components/parameters/Size"
         - $ref: "#/components/parameters/Sort"
       responses:
-        "200":
+        '200':
           description: Paginated list of projects
           headers:
             X-Total-Count:
-              $ref: "#/components/headers/X-Total-Count"
+              $ref: '#/components/headers/X-Total-Count'
             X-Page-Size:
-              $ref: "#/components/headers/X-Page-Size"
+              $ref: '#/components/headers/X-Page-Size'
             X-Page-Number:
-              $ref: "#/components/headers/X-Page-Number"
+              $ref: '#/components/headers/X-Page-Number'
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/ProjectResponse"
-        "401":
+                  $ref: '#/components/schemas/ProjectResponse'
+        '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "403":
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "500":
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
           description: Internal server error
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
+                $ref: '#/components/schemas/ErrorResponse'
     post:
       operationId: createProject
       tags: [Project]
@@ -339,44 +357,44 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/CreateProjectRequest"
+              $ref: '#/components/schemas/CreateProjectRequest'
       responses:
-        "201":
+        '201':
           description: Project created
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ProjectResponse"
-        "400":
+                $ref: '#/components/schemas/ProjectResponse'
+        '400':
           description: Bad request
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "401":
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "403":
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "409":
+                $ref: '#/components/schemas/ErrorResponse'
+        '409':
           description: Project already exists
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "500":
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
           description: Internal server error
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
+                $ref: '#/components/schemas/ErrorResponse'
 
   /project/{id}:
     get:
@@ -391,36 +409,36 @@ paths:
             type: integer
             format: int64
       responses:
-        "200":
+        '200':
           description: Project details
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ProjectResponse"
-        "401":
+                $ref: '#/components/schemas/ProjectResponse'
+        '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "403":
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "404":
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
           description: Project not found
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "500":
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
           description: Internal server error
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
+                $ref: '#/components/schemas/ErrorResponse'
     put:
       operationId: updateProject
       tags: [Project]
@@ -437,44 +455,44 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/UpdateProjectRequest"
+              $ref: '#/components/schemas/UpdateProjectRequest'
       responses:
-        "200":
+        '200':
           description: Project updated
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ProjectResponse"
-        "400":
+                $ref: '#/components/schemas/ProjectResponse'
+        '400':
           description: Bad request
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "401":
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "403":
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "404":
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
           description: Project not found
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "500":
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
           description: Internal server error
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
+                $ref: '#/components/schemas/ErrorResponse'
     delete:
       operationId: deleteProjectById
       tags: [Project]
@@ -487,65 +505,167 @@ paths:
             type: integer
             format: int64
       responses:
-        "204":
+        '204':
           description: Project deleted
-        "401":
+        '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "403":
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "404":
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
           description: Project not found
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "500":
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
           description: Internal server error
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-
-  /column:
+                $ref: '#/components/schemas/ErrorResponse'
+  /project/{id}/members:
     get:
-      operationId: getAllColumns
-      tags: [Column]
-      summary: Get all columns
+      operationId: getProjectMembers
+      tags: [Project]
+      summary: Get members of a project
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
       responses:
-        "200":
+        '200':
+          description: List of members
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        '404':
+          description: Project not found
+    post:
+      operationId: addProjectMembers
+      tags: [Project]
+      summary: Add a list of members to a project
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: integer
+                format: int64
+                description: User ID
+      responses:
+        '200':
+          description: Members added
+        '404':
+          description: Project or user not found
+  /project/{id}/members/{userId}:
+    delete:
+      operationId: removeProjectMember
+      tags: [Project]
+      summary: Remove a member from a project
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: Member removed
+        '404':
+          description: Project or user not found
+  /project/{id}/columns:
+    get:
+      operationId: getProjectColumns
+      tags: [Project]
+      summary: Get columns of a project
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
           description: List of columns
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/ColumnResponse"
-        "401":
+                  $ref: '#/components/schemas/ColumnResponse'
+        '404':
+          description: Project not found
+  /column/project/{id}:
+    get:
+      operationId: getColumnsByProjectId
+      tags: [ Column ]
+      summary: Get columns by project id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: List of columns of a project
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ColumnResponse'
+        '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "403":
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "500":
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
           description: Internal server error
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
+                $ref: '#/components/schemas/ErrorResponse'
+  /column:
     post:
       operationId: createColumn
       tags: [Column]
@@ -555,44 +675,44 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/CreateColumnRequest"
+              $ref: '#/components/schemas/CreateColumnRequest'
       responses:
-        "201":
+        '201':
           description: Column created
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ColumnResponse"
-        "400":
+                $ref: '#/components/schemas/ColumnResponse'
+        '400':
           description: Bad request
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "401":
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "403":
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "409":
+                $ref: '#/components/schemas/ErrorResponse'
+        '409':
           description: Column already exists
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "500":
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
           description: Internal server error
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
+                $ref: '#/components/schemas/ErrorResponse'
 
   /column/{id}:
     get:
@@ -607,36 +727,36 @@ paths:
             type: integer
             format: int64
       responses:
-        "200":
+        '200':
           description: Column details
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ColumnResponse"
-        "401":
+                $ref: '#/components/schemas/ColumnResponse'
+        '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "403":
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "404":
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
           description: Column not found
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "500":
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
           description: Internal server error
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
+                $ref: '#/components/schemas/ErrorResponse'
     put:
       operationId: updateColumn
       tags: [Column]
@@ -653,44 +773,44 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/UpdateColumnRequest"
+              $ref: '#/components/schemas/UpdateColumnRequest'
       responses:
-        "200":
+        '200':
           description: Column updated
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ColumnResponse"
-        "400":
+                $ref: '#/components/schemas/ColumnResponse'
+        '400':
           description: Bad request
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "401":
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "403":
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "404":
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
           description: Column not found
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "500":
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
           description: Internal server error
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
+                $ref: '#/components/schemas/ErrorResponse'
     delete:
       operationId: deleteColumnById
       tags: [Column]
@@ -703,32 +823,32 @@ paths:
             type: integer
             format: int64
       responses:
-        "204":
+        '204':
           description: Column deleted
-        "401":
+        '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "403":
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "404":
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
           description: Column not found
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "500":
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
           description: Internal server error
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
+                $ref: '#/components/schemas/ErrorResponse'
 
   /card:
     post:
@@ -740,44 +860,44 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/CreateCardRequest"
+              $ref: '#/components/schemas/CreateCardRequest'
       responses:
-        "201":
+        '201':
           description: Card created
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Card"
-        "400":
+                $ref: '#/components/schemas/Card'
+        '400':
           description: Bad request
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "401":
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "403":
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "409":
+                $ref: '#/components/schemas/ErrorResponse'
+        '409':
           description: Card already exists
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "500":
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
           description: Internal server error
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
+                $ref: '#/components/schemas/ErrorResponse'
 
   /card/{id}:
     get:
@@ -792,36 +912,36 @@ paths:
             type: integer
             format: int64
       responses:
-        "200":
+        '200':
           description: Card details
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Card"
-        "401":
+                $ref: '#/components/schemas/Card'
+        '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "403":
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "404":
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
           description: Card not found
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "500":
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
           description: Internal server error
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
+                $ref: '#/components/schemas/ErrorResponse'
     put:
       operationId: updateCard
       tags: [Card]
@@ -838,44 +958,44 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/UpdateCardRequest"
+              $ref: '#/components/schemas/UpdateCardRequest'
       responses:
-        "200":
+        '200':
           description: Card updated
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Card"
-        "400":
+                $ref: '#/components/schemas/Card'
+        '400':
           description: Bad request
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "401":
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "403":
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "404":
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
           description: Card not found
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "500":
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
           description: Internal server error
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
+                $ref: '#/components/schemas/ErrorResponse'
     delete:
       operationId: deleteCardById
       tags: [Card]
@@ -888,48 +1008,46 @@ paths:
             type: integer
             format: int64
       responses:
-        "204":
+        '204':
           description: Card deleted
-        "401":
+        '401':
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "403":
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "404":
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
           description: Card not found
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "500":
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
           description: Internal server error
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
+                $ref: '#/components/schemas/ErrorResponse'
 
 components:
+
   headers:
     X-Total-Count:
       schema:
-        format: int32
         type: integer
       description: Total amount of elements for this query
     X-Page-Number:
       schema:
-        format: int32
         type: integer
       description: Page number starting from 0
     X-Page-Size:
       schema:
-        format: int32
         type: integer
       description: Page size
 
@@ -982,9 +1100,9 @@ components:
       required: false
     Sort:
       name: sort
-      description: "The field to be sorted, direction (e.g.: id,desc)"
+      description: 'The field to be sorted, direction (e.g.: id,desc)'
       schema:
-        default: "title,asc"
+        default: 'title,asc'
         type: string
       in: query
       required: false
@@ -1044,7 +1162,7 @@ components:
 
     UserResponse:
       allOf:
-        - $ref: "#/components/schemas/User"
+        - $ref: '#/components/schemas/User'
 
     UpdatePersonalDataRequest:
       type: object
@@ -1081,13 +1199,13 @@ components:
         members:
           type: array
           items:
-            $ref: "#/components/schemas/User"
+            $ref: '#/components/schemas/User'
         columns:
           type: array
           items:
-            $ref: "#/components/schemas/Column"
+            $ref: '#/components/schemas/Column'
         createdBy:
-          $ref: "#/components/schemas/User"
+          $ref: '#/components/schemas/User'
         createdAt:
           type: string
           format: date-time
@@ -1131,15 +1249,6 @@ components:
           type: string
         description:
           type: string
-        members:
-          type: array
-          items:
-            type: integer
-            format: int64
-        columns:
-          type: array
-          items:
-            $ref: "#/components/schemas/Column"
 
     ProjectResponse:
       type: object
@@ -1154,12 +1263,12 @@ components:
         members:
           type: array
           items:
-            $ref: "#/components/schemas/User"
+            $ref: '#/components/schemas/User'
         cardsNumber:
           type: number
           format: int32
         createdBy:
-          $ref: "#/components/schemas/User"
+          $ref: '#/components/schemas/User'
         createdAt:
           type: string
           format: date-time
@@ -1180,7 +1289,7 @@ components:
         cards:
           type: array
           items:
-            $ref: "#/components/schemas/Card"
+            $ref: '#/components/schemas/Card'
         projectId:
           type: integer
           format: int64
@@ -1209,7 +1318,7 @@ components:
 
     ColumnResponse:
       allOf:
-        - $ref: "#/components/schemas/Column"
+        - $ref: '#/components/schemas/Column'
 
     Card:
       type: object
@@ -1222,7 +1331,7 @@ components:
         description:
           type: string
         assignedTo:
-          $ref: "#/components/schemas/User"
+          $ref: '#/components/schemas/User'
         columnId:
           type: integer
           format: int64
@@ -1268,3 +1377,4 @@ components:
           type: integer
         message:
           type: string
+

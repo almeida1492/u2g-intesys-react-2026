@@ -2,7 +2,7 @@ import { useFormik } from "formik";
 import { useNavigate } from "react-router";
 import * as Yup from "yup";
 import globalStyles from "../../globals.module.css";
-import { authApi, userApi } from "../../services";
+import { authApi } from "../../services";
 import styles from "./login.module.css";
 import { Button } from "../../components/button/Button";
 

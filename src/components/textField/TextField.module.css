@@ -1,0 +1,88 @@
+/* ── Search wrapper ── */
+.searchWrapper {
+  width: 100%;
+  max-width: 420px;
+  margin-bottom: 0;
+}
+
+.searchInputWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+/* ── Loupe icon ── */
+.searchIcon {
+  position: absolute;
+  left: 14px;
+  color: #94a3b8;
+  pointer-events: none;
+  transition: color 0.2s ease;
+  z-index: 1;
+}
+
+/* ── Input ── */
+.searchInput {
+  width: 100%;
+  padding: 11px 40px 11px 42px;
+  border: 2px solid #e2e8f0;
+  border-radius: 14px;
+  font-size: 14px;
+  font-family: "Georgia", serif;
+  color: #1e293b;
+  background: #ffffff;
+  outline: none;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.searchInput::placeholder {
+  color: #cbd5e1;
+  font-style: italic;
+}
+
+.searchInput:hover {
+  border-color: #c7d2fe;
+  background: #fafbff;
+}
+
+.searchInput:focus {
+  border-color: #6366f1;
+  background: #fff;
+  box-shadow:
+    0 0 0 4px rgba(99, 102, 241, 0.1),
+    0 2px 8px rgba(99, 102, 241, 0.08);
+}
+
+/* Loupe change de couleur au focus */
+.searchInputWrapper:has(.searchInput:focus) .searchIcon {
+  color: #6366f1;
+}
+
+/* ── Bouton ✕ ── */
+.clearButton {
+  position: absolute;
+  right: 12px;
+  background: #f1f5f9;
+  border: none;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  color: #64748b;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+  padding: 0;
+  line-height: 1;
+}
+
+.clearButton:hover {
+  background: #e2e8f0;
+  color: #1e293b;
+}

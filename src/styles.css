@@ -5,3 +5,54 @@ body {
   margin: 0;
   padding: 0;
 }
+
+.content {
+  display: flex;
+  flex: 1;
+}
+
+.main {
+  flex: 1;
+  padding: 24px;
+}
+
+.siderbar {
+  width: 220px;
+  background-color: #f0f0f0;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  height: 100%;
+}
+
+.siderbar ul {
+  flex: 1; 
+  list-style: none;
+}
+
+.siderbar-button {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.btn-settings, .btn-logout {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #f3e5e5cb;
+  border-radius: 6px;
+  cursor: pointer;
+  background-color: rgb(165, 153, 153);
+  font-size: 0.9rem;
+}
+
+.btn-settings:hover {
+  background-color: #fa63d9;
+}
+
+.btn-logout:hover {
+  background-color: #f766d7;
+  color: red;
+
+}

@@ -21,6 +21,7 @@ export const Login = () => {
         .required("Required field"),
     }),
     onSubmit: async (values) => {
+      console.log("submitted")
       try {
         console.log("values: ", values);
         const response = await authApi.login({

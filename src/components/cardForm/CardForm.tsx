@@ -1,53 +1,57 @@
-import { useMutation } from "@tanstack/react-query";
-import { Button } from "../button/Button";
-import { TextField } from "../textField/TextField";
 import { useFormik } from "formik";
-import { cardApi } from "../../services";
-import { useNavigate, useParams } from "react-router";
-import type { CreateCardRequest } from "../../api";
+import * as Yup from "yup";
+import { TextField } from "../textField/TextField";
 
-export function CardForm() {
-  const { id } = useParams<{ id: string }>();
-  const navigate = useNavigate();
-  const { mutate } = useMutation({
-    mutationFn: (values: Pick<CreateCardRequest, "title" | "description">) =>
-      cardApi.createCard({
-        createCardRequest: {
-          title: values.title,
-          description: values.description || "",
-          columnId: Number(id),
-        },
-      }),
-    onSuccess: () => {
-      navigate(`/projects/${id}`);
-    },
-  });
+export interface CardFormValues {
+  title: string;
+  description: string;
+}
 
-  const { values, handleChange, handleSubmit } = useFormik<
-    Pick<CreateCardRequest, "title" | "description">
-  >({
-    initialValues: {
+interface CardFormProps {
+  isPending?: boolean;
+  initialValues?: CardFormValues;
+  handleSubmit: (values: CardFormValues) => void;
+}
+
+export function CardForm({ isPending, initialValues, handleSubmit }: CardFormProps) {
+  const formik = useFormik<CardFormValues>({
+    initialValues: initialValues || {
       title: "",
       description: "",
     },
-    onSubmit: (values) => mutate(values),
+    enableReinitialize: true,
+    validationSchema: Yup.object({
+      title: Yup.string().required("Title is required"),
+      description: Yup.string().required("Description is required"),
+    }),
+    onSubmit: handleSubmit,
   });
+
   return (
-    <form onSubmit={handleSubmit}>
-      <h1>Create Card</h1>
+    <form onSubmit={formik.handleSubmit}>
       <TextField
-        label="Title"
+        id="title"
         name="title"
-        value={values.title}
-        onChange={handleChange}
+        label="Title"
+        value={formik.values.title}
+        onChange={formik.handleChange}
+        onBlur={formik.handleBlur}
+        error={formik.errors.title}
+        touched={formik.touched.title}
       />
       <TextField
-        label="Description"
+        id="description"
         name="description"
-        value={values.description}
-        onChange={handleChange}
+        label="Description"
+        value={formik.values.description}
+        onChange={formik.handleChange}
+        onBlur={formik.handleBlur}
+        error={formik.errors.description}
+        touched={formik.touched.description}
       />
-      <Button type="submit">Create Card</Button>
+      <button type="submit" disabled={isPending}>
+        {isPending ? "Loading..." : "Save Card"}
+      </button>
     </form>
   );
 }

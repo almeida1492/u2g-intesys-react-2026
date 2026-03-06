@@ -1,52 +1,87 @@
-import { useMemo, useState } from "react";
-import { useDebounce } from "use-debounce";
+import { useState } from "react";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { Link } from "react-router";
+import globalStyles from "../../globals.module.css";
+import { projectApi } from "../../services";
 import { TextField } from "../../components/textField/TextField";
-import { useProjects } from "../../queries/useProjects";
-import { ProjectDetailsCard } from "../../components/projectDetailsCard/ProjectDetailsCard";
-import styles from "./dashboard.module.css";
-import { useNavigate } from "react-router";
+import { useDebounce } from "../../hooks/useDebounce";
+import { Modal } from "../../components/modal/Modal";
+import {
+  ProjectForm,
+  type ProjectFormValues,
+} from "../../components/projectForm/ProjectForm";
 
 export function Dashboard() {
   const [search, setSearch] = useState("");
-  const [debouncedSearch] = useDebounce(search, 500);
-  const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const debouncedSearch = useDebounce(search, 500);
+  const queryClient = useQueryClient();
 
-  const { projects, isFetching } = useProjects();
+  const { data: projects, isFetching } = useQuery({
+    queryKey: ["projects", debouncedSearch],
+    queryFn: () =>
+      projectApi.getAllProjects({
+        search: debouncedSearch || undefined,
+      }),
+  });
 
-  const filteredProjects = useMemo(() => {
-    if (!projects) return [];
-    if (!debouncedSearch.trim()) return projects;
-    const query = debouncedSearch.toLowerCase();
-    return projects.filter(
-      (project) =>
-        project.title?.toLowerCase().includes(query) ||
-        project.description?.toLowerCase().includes(query),
-    );
-  }, [projects, debouncedSearch]);
+  const { mutate, isPending } = useMutation({
+    mutationFn: (newProjectData: ProjectFormValues) =>
+      projectApi.createProject({
+        createProjectRequest: {
+          title: newProjectData.title || "",
+          description: newProjectData.description || "",
+          columns: newProjectData.columns || [],
+          members:
+            (newProjectData.members
+              ?.map((member) => member)
+              .filter(Boolean) as number[]) || [],
+        },
+      }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["projects"] });
+      setIsModalOpen(false);
+    },
+  });
 
   return (
-    <>
-      <h1>Dashboard</h1>
+    <main className={globalStyles.main}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <h1>Dashboard</h1>
+        <button onClick={() => setIsModalOpen(true)}>+ Create Project</button>
+      </div>
+
+      <nav style={{ display: "flex", flexDirection: "column" }}>
+        <Link to="settings">Settings</Link>
+      </nav>
 
       <TextField
+        label="Search projects"
+        placeholder="Type to search..."
         value={search}
         onChange={(e) => setSearch(e.target.value)}
-        placeholder="Type to search..."
       />
 
       {isFetching ? (
         <p>Loading...</p>
       ) : (
-        <div className={styles.projectsGrid}>
-          {filteredProjects?.map((project) => (
-            <ProjectDetailsCard
-              key={project.id}
-              project={project}
-              onClick={() => navigate(`/projects/${project.id}`)}
-            />
-          ))}
-        </div>
+        projects?.map((project) => (
+          <div key={project.id}>
+            <Link to={`projects/${project.id}`}>
+              <h2>{project.title}</h2>
+            </Link>
+            <p>{project.description}</p>
+          </div>
+        ))
       )}
-    </>
+
+      <Modal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        title="Create New Project"
+      >
+        <ProjectForm isPending={isPending} handleSubmit={mutate} />
+      </Modal>
+    </main>
   );
 }
